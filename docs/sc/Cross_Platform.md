@@ -257,7 +257,7 @@ You will see the communication, shown as video below:
 
 <p align="center">
 <video controls width="700">
-  <source src="/videos/communication.mp4" type="video/mp4">
+  <source src="https://changdama.github.io/ai_r_lab_tutorial/videos/communication.mp4" type="video/mp4">
 </video>
 </p>
        

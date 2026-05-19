@@ -4,7 +4,7 @@ Load the AR4 MK3 USD model in Isaac Sim with Python, and drive its parallel grip
 
 <p align="center">
 <video controls width="700">
-  <source src="/videos/gripper_control.mp4" type="video/mp4">
+  <source src="https://changdama.github.io/ai_r_lab_tutorial/videos/gripper_control.mp4" type="video/mp4">
 </video>
 </p>
 
