@@ -80,7 +80,7 @@ This tutorial demonstrates how to control the AR4 robot using MoveIt in RViz whi
 
        <p align="center">
        <video controls width="700">
-         <source src="../videos/rviz_gazebo.webm" type="video/webm">
+         <source src="https://changdama.github.io/ai_r_lab_tutorial/videos/rviz_gazebo.webm" type="video/webm">
        </video>
        </p>
 
