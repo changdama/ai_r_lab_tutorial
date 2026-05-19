@@ -1,0 +1,870 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>AR4 Gripper Control in IsaacSim - AI Robot Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Serif";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ar4-gripper-control-in-isaacsim" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI Robot Tutorial" class="md-header__button md-logo" aria-label="AI Robot Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Robot Tutorial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AR4 Gripper Control in IsaacSim
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../setup/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Setup
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation and Control
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../perception/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Perception
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../learning/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Learning
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../deploy/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Deployment
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI Robot Tutorial" class="md-nav__button md-logo" aria-label="AI Robot Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Robot Tutorial
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../perception/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Perception
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ar4-gripper-control-in-isaacsim">AR4 Gripper Control in IsaacSim<a class="headerlink" href="#ar4-gripper-control-in-isaacsim" title="Permanent link">&para;</a></h1>
+<p>Load the AR4 MK3 USD model in Isaac Sim with Python, and drive its parallel gripper through a smooth sinusoidal open-close motion using <code>ParallelGripper</code>.</p>
+<p align="center">
+<video controls width="700">
+  <source src="/videos/gripper_control.mp4" type="video/mp4">
+</video>
+</p>
+
+<hr />
+<h2 id="0-what-this-tutorial-covers">0. What this tutorial covers<a class="headerlink" href="#0-what-this-tutorial-covers" title="Permanent link">&para;</a></h2>
+<p>By the end of this walkthrough you will be able to:</p>
+<ol>
+<li>Load the AR4 MK3 USD into an Isaac Sim from a Python script;</li>
+<li><strong>Auto locate</strong> the end-effector (<code>gripper_base_link</code>) instead of hard coding a long prim path;</li>
+<li>Drive the gripper with <code>ParallelGripper</code> and a USD <code>mimic</code> joint so both jaws move together;</li>
+<li>Animate the jaws with a sine wave so you can visually verify the control loop is working.</li>
+</ol>
+<hr />
+<h2 id="1-prerequisites">1. Prerequisites<a class="headerlink" href="#1-prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Isaac Sim <strong>5.1</strong></li>
+<li>Python 3.10 (the interpreter shipped with Isaac Sim)</li>
+<li>An AR4 MK3 USD file. In this tutorial the path is:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>F:/isaac/ar4_urdf/ar4_mk3_isaac/ar4_mk3_isaac.usd
+</code></pre></div>
+<p>If you only have a URDF, convert it with Isaac Sim's built-in <strong>URDF Importer</strong>. Tick <code>Fix Base Link</code> during import — otherwise the arm will spawn lying flat on the ground.</p>
+<hr />
+<h2 id="2-the-big-picture">2. The big picture<a class="headerlink" href="#2-the-big-picture" title="Permanent link">&para;</a></h2>
+<p>Controlling the gripper boils down to two problems:</p>
+<ul>
+<li><strong>Find the end-effector prim.</strong> <code>ParallelGripper</code> needs an <code>end_effector_prim_path</code>, and that path has to actually exist on the USD stage. URDF-imported paths tend to be deeply nested and version-dependent, so hard-coding them is brittle. We'll discover the prim at runtime instead.</li>
+<li><strong>Drive the gripper joint.</strong> AR4's gripper has two parts — one active joint (<code>gripper_jaw1_joint</code>) plus a mimic joint where jaw2 follows jaw1. Setting <code>use_mimic_joints=True</code> on <code>ParallelGripper</code> is enough to handle the coupling.</li>
+</ul>
+<p>Once those are sorted, the loop just needs to feed jaw1 a target position oscillating between <code>0</code> and <code>0.014</code> m.</p>
+<hr />
+<h2 id="3-walking-through-the-code">3. Walking through the code<a class="headerlink" href="#3-walking-through-the-code" title="Permanent link">&para;</a></h2>
+<h3 id="31-boot-simulationapp">3.1 Boot SimulationApp<a class="headerlink" href="#31-boot-simulationapp" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">isaacsim</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimulationApp</span>
+<span class="n">simulation_app</span> <span class="o">=</span> <span class="n">SimulationApp</span><span class="p">({</span><span class="s2">&quot;headless&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+</code></pre></div>
+<p><strong>This line must come before any other <code>isaacsim.*</code> import.</strong> Isaac Sim is built on Kit, and most modules can only be loaded <em>after</em> <code>SimulationApp</code> is up. Get the order wrong and you'll see cryptic import errors.</p>
+<p><code>headless=False</code> opens the GUI — keep it on while debugging, flip it to <code>True</code> for training runs.</p>
+<h3 id="32-imports-and-cli-args">3.2 Imports and CLI args<a class="headerlink" href="#32-imports-and-cli-args" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">isaacsim.core.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">World</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">isaacsim.core.utils.stage</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_reference_to_stage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">isaacsim.core.utils.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArticulationAction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">isaacsim.robot.manipulators</span><span class="w"> </span><span class="kn">import</span> <span class="n">SingleManipulator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">isaacsim.robot.manipulators.grippers</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParallelGripper</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">omni.usd</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--test&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span>
+<span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+
+<span class="n">USD_PATH</span>   <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:/isaac/ar4_urdf/ar4_mk3_isaac/ar4_mk3_isaac.usd&quot;</span>
+<span class="n">ROBOT_PRIM</span> <span class="o">=</span> <span class="s2">&quot;/World/ar4_mk3_isaac&quot;</span>
+</code></pre></div>
+<p>The <code>--test</code> flag is for CI: it lets the script auto-exit after a few seconds instead of running forever.</p>
+<h3 id="33-create-the-world-and-load-the-usd">3.3 Create the World and load the USD<a class="headerlink" href="#33-create-the-world-and-load-the-usd" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">my_world</span> <span class="o">=</span> <span class="n">World</span><span class="p">(</span><span class="n">stage_units_in_meters</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">add_reference_to_stage</span><span class="p">(</span><span class="n">usd_path</span><span class="o">=</span><span class="n">USD_PATH</span><span class="p">,</span> <span class="n">prim_path</span><span class="o">=</span><span class="n">ROBOT_PRIM</span><span class="p">)</span>
+
+<span class="c1"># Force one stage update so the prims actually materialize</span>
+<span class="n">simulation_app</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</code></pre></div>
+<p>⚠️ <strong><code>simulation_app.update()</code> is critical.</strong> <code>add_reference_to_stage</code> only attaches a reference; the prim tree underneath is expanded on the next stage tick. If you immediately call <code>Traverse()</code> you'll get an empty result and waste an hour debugging — it's a timing issue, not a path issue.</p>
+<h3 id="34-auto-discover-the-end-effector-prim">3.4 Auto-discover the end-effector prim<a class="headerlink" href="#34-auto-discover-the-end-effector-prim" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">stage</span> <span class="o">=</span> <span class="n">omni</span><span class="o">.</span><span class="n">usd</span><span class="o">.</span><span class="n">get_context</span><span class="p">()</span><span class="o">.</span><span class="n">get_stage</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">find_prim_suffix</span><span class="p">(</span><span class="n">suffix</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">hits</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">prim</span> <span class="ow">in</span> <span class="n">stage</span><span class="o">.</span><span class="n">Traverse</span><span class="p">():</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">prim</span><span class="o">.</span><span class="n">GetPath</span><span class="p">()</span><span class="o">.</span><span class="n">pathString</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">suffix</span><span class="p">):</span>
+            <span class="n">hits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hits</span>
+
+<span class="n">hits</span> <span class="o">=</span> <span class="n">find_prim_suffix</span><span class="p">(</span><span class="s2">&quot;/gripper_base_link&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Found gripper_base_link prims ===&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hits</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;can&#39;t find gripper_base_link, USD load failed&quot;</span><span class="p">)</span>
+
+<span class="c1"># When several candidates exist, prefer the one under link_6</span>
+<span class="n">EE_PRIM</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;/link_6/&quot;</span> <span class="ow">in</span> <span class="n">h</span><span class="p">:</span>
+        <span class="n">EE_PRIM</span> <span class="o">=</span> <span class="n">h</span>
+        <span class="k">break</span>
+<span class="k">if</span> <span class="n">EE_PRIM</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">EE_PRIM</span> <span class="o">=</span> <span class="n">hits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;=== Using EE_PRIM: </span><span class="si">{</span><span class="n">EE_PRIM</span><span class="si">}</span><span class="s2"> ===&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Why bother? Because URDF-imported USDs produce paths like:</p>
+<div class="highlight"><pre><span></span><code>/World/ar4_mk3_isaac/base_link/link_1/link_2/.../link_6/gripper_base_link
+</code></pre></div>
+<p>The exact hierarchy varies between importer versions. <strong>Suffix matching is portable; hard-coded paths are not.</strong></p>
+<p>The <code>link_6</code> preference handles a sneaky edge case: some USD models contain duplicate <code>gripper_base_link</code> prims (collision proxies, visual children, etc.) — the one nested under <code>link_6</code> is the actual kinematic end-effector.</p>
+<h3 id="35-configure-the-parallelgripper">3.5 Configure the ParallelGripper<a class="headerlink" href="#35-configure-the-parallelgripper" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">gripper</span> <span class="o">=</span> <span class="n">ParallelGripper</span><span class="p">(</span>
+    <span class="n">end_effector_prim_path</span><span class="o">=</span><span class="n">EE_PRIM</span><span class="p">,</span>
+    <span class="n">joint_prim_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;gripper_jaw1_joint&quot;</span><span class="p">],</span>
+    <span class="n">joint_opened_positions</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.014</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+    <span class="n">joint_closed_positions</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+    <span class="n">action_deltas</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.014</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+    <span class="n">use_mimic_joints</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Argument by argument:</p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>end_effector_prim_path</code></td>
+<td>The prim where forward kinematics terminates</td>
+</tr>
+<tr>
+<td><code>joint_prim_names</code></td>
+<td>The <strong>active</strong> joint name only</td>
+</tr>
+<tr>
+<td><code>joint_opened_positions</code></td>
+<td>Jaw1 position when fully open (meters); 14 mm for AR4</td>
+</tr>
+<tr>
+<td><code>joint_closed_positions</code></td>
+<td>Jaw1 position when fully closed</td>
+</tr>
+<tr>
+<td><code>action_deltas</code></td>
+<td>Step size for discrete <code>open()</code> / <code>close()</code> actions</td>
+</tr>
+<tr>
+<td><code>use_mimic_joints=True</code></td>
+<td><strong>Key flag</strong>: jaw2's mimic joint is driven automatically by USD's mimic API</td>
+</tr>
+</tbody>
+</table>
+<p>If you leave <code>use_mimic_joints=False</code>, you have to command jaw1 and jaw2 yourself, mirror the sign correctly, and stay in lockstep frame by frame. Even a 0.001 m mismatch can jam the jaws. Just set it to <code>True</code>.</p>
+<h3 id="36-wrap-it-in-a-singlemanipulator">3.6 Wrap it in a SingleManipulator<a class="headerlink" href="#36-wrap-it-in-a-singlemanipulator" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">robot</span> <span class="o">=</span> <span class="n">my_world</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+    <span class="n">SingleManipulator</span><span class="p">(</span>
+        <span class="n">prim_path</span><span class="o">=</span><span class="n">ROBOT_PRIM</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ar4_mk3&quot;</span><span class="p">,</span>
+        <span class="n">end_effector_prim_path</span><span class="o">=</span><span class="n">EE_PRIM</span><span class="p">,</span>
+        <span class="n">gripper</span><span class="o">=</span><span class="n">gripper</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">my_world</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">add_default_ground_plane</span><span class="p">()</span>
+<span class="n">my_world</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">my_world</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+</code></pre></div>
+<p><code>SingleManipulator</code> is Isaac Sim's high-level wrapper that bundles "arm body + end-effector + gripper" into one object. From here on you can just call <code>robot.gripper.apply_action(...)</code>.</p>
+<p><code>my_world.reset()</code> <strong>must</strong> be called before <code>play()</code> — that's when joint handles, controllers, and other internal state get initialized. Skip it and you'll get an <code>articulation not initialized</code> error.</p>
+<h3 id="37-the-sinusoidal-control-loop">3.7 The sinusoidal control loop<a class="headerlink" href="#37-the-sinusoidal-control-loop" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">OPEN</span>  <span class="o">=</span> <span class="mf">0.014</span>
+<span class="n">CLOSE</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">period_sec</span> <span class="o">=</span> <span class="mf">1.0</span>   <span class="c1"># smaller = faster</span>
+<span class="n">fps_est</span>    <span class="o">=</span> <span class="mf">60.0</span>  <span class="c1"># estimated sim frame rate</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">simulation_app</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
+    <span class="n">my_world</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">render</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Auto-resume if the user clicks Stop in the GUI</span>
+    <span class="k">if</span> <span class="n">my_world</span><span class="o">.</span><span class="n">is_stopped</span><span class="p">():</span>
+        <span class="n">my_world</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+
+    <span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">phase</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="p">(</span><span class="n">fps_est</span> <span class="o">*</span> <span class="n">period_sec</span><span class="p">))</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">s01</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phase</span><span class="p">))</span>      <span class="c1"># remap to [0, 1]</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">CLOSE</span> <span class="o">+</span> <span class="n">s01</span> <span class="o">*</span> <span class="p">(</span><span class="n">OPEN</span> <span class="o">-</span> <span class="n">CLOSE</span><span class="p">)</span>  <span class="c1"># remap to jaw position</span>
+
+    <span class="n">robot</span><span class="o">.</span><span class="n">gripper</span><span class="o">.</span><span class="n">apply_action</span><span class="p">(</span>
+        <span class="n">ArticulationAction</span><span class="p">(</span><span class="n">joint_positions</span><span class="o">=</span><span class="p">[</span><span class="n">target</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">test</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">180</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">simulation_app</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<p>Why a sine wave instead of toggling <code>open()</code> / <code>close()</code>?</p>
+<ul>
+<li><strong>Square-wave switching</strong> makes the gripper slam to the target at max velocity. It looks robotic, excites mechanical chatter, and makes it hard to tune stiffness/damping.</li>
+<li><strong>A sinusoidal target</strong> gives the PD controller a smooth trajectory it can actually track. The motion looks like breathing, and it's a much better signal for tuning gains.</li>
+</ul>
+<p><code>s01 = 0.5 * (1 + sin(x))</code> is the standard trick to remap <code>sin</code> from <code>[-1, 1]</code> into <code>[0, 1]</code>.</p>
+<hr />
+<h2 id="4-running-it">4. Running it<a class="headerlink" href="#4-running-it" title="Permanent link">&para;</a></h2>
+<p>Save the script as <code>ar4_gripper_demo.py</code> and run it with Isaac Sim's bundled Python:</p>
+<p><strong>Windows:</strong>
+<div class="highlight"><pre><span></span><code><span class="s2">&quot;C:\Users\&lt;you&gt;\AppData\Local\ov\pkg\isaac-sim-5.1.0\python.bat&quot;</span><span class="w"> </span>ar4_gripper_demo.py
+</code></pre></div></p>
+<p><strong>Linux:</strong>
+<div class="highlight"><pre><span></span><code>./python.sh<span class="w"> </span>ar4_gripper_demo.py
+</code></pre></div></p>
+<p>If everything is wired up correctly, the GUI opens, AR4 stands on the ground plane, and the gripper opens and closes once per second.</p>
+<hr />
+<h2 id="5-common-pitfalls">5. Common pitfalls<a class="headerlink" href="#5-common-pitfalls" title="Permanent link">&para;</a></h2>
+<p><strong>1. <code>gripper_base_link</code> not found</strong>
+Double-check the USD path. On Windows, use a raw string <code>r"..."</code> or escape the backslashes.</p>
+<p><strong>2. <code>articulation is not initialized</code></strong>
+99% of the time you forgot <code>my_world.reset()</code>, or you skipped <code>simulation_app.update()</code> after <code>add_reference_to_stage</code>.</p>
+<p><strong>3. Only one finger moves</strong>
+The mimic joint isn't active. Two possible causes:
+- <code>use_mimic_joints=False</code> (the default — you have to opt in explicitly);
+- The mimic tag wasn't carried over during URDF → USD conversion. Open the USD file and search for <code>physics:MimicAPI</code>. If it's missing, either patch it in by hand or re-import with a newer version of the URDF importer.</p>
+<p><strong>4. Frame-rate jitter throws off the period</strong>
+<code>fps_est = 60.0</code> is just an estimate. For an exact period, drive the phase from sim time instead of frame count:</p>
+<div class="highlight"><pre><span></span><code><span class="n">phase</span> <span class="o">=</span> <span class="p">(</span><span class="n">my_world</span><span class="o">.</span><span class="n">current_time</span> <span class="o">/</span> <span class="n">period_sec</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+</code></pre></div>
+<p>Now the cycle is exactly <code>period_sec</code> seconds regardless of actual frame rate.</p>
+<hr />
+<h2 id="6-full-script">6. Full script<a class="headerlink" href="#6-full-script" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Drop-in runnable. Just update <code>USD_PATH</code>.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">isaacsim</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimulationApp</span>
+<span class="n">simulation_app</span> <span class="o">=</span> <span class="n">SimulationApp</span><span class="p">({</span><span class="s2">&quot;headless&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">isaacsim.core.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">World</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">isaacsim.core.utils.stage</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_reference_to_stage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">isaacsim.core.utils.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArticulationAction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">isaacsim.robot.manipulators</span><span class="w"> </span><span class="kn">import</span> <span class="n">SingleManipulator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">isaacsim.robot.manipulators.grippers</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParallelGripper</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">omni.usd</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--test&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span>
+<span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+
+<span class="n">USD_PATH</span>   <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:/isaac/ar4_urdf/ar4_mk3_isaac/ar4_mk3_isaac.usd&quot;</span>
+<span class="n">ROBOT_PRIM</span> <span class="o">=</span> <span class="s2">&quot;/World/ar4_mk3_isaac&quot;</span>
+
+<span class="n">my_world</span> <span class="o">=</span> <span class="n">World</span><span class="p">(</span><span class="n">stage_units_in_meters</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">add_reference_to_stage</span><span class="p">(</span><span class="n">usd_path</span><span class="o">=</span><span class="n">USD_PATH</span><span class="p">,</span> <span class="n">prim_path</span><span class="o">=</span><span class="n">ROBOT_PRIM</span><span class="p">)</span>
+<span class="n">simulation_app</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+<span class="n">stage</span> <span class="o">=</span> <span class="n">omni</span><span class="o">.</span><span class="n">usd</span><span class="o">.</span><span class="n">get_context</span><span class="p">()</span><span class="o">.</span><span class="n">get_stage</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">find_prim_suffix</span><span class="p">(</span><span class="n">suffix</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">GetPath</span><span class="p">()</span><span class="o">.</span><span class="n">pathString</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">stage</span><span class="o">.</span><span class="n">Traverse</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">GetPath</span><span class="p">()</span><span class="o">.</span><span class="n">pathString</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">suffix</span><span class="p">)]</span>
+
+<span class="n">hits</span> <span class="o">=</span> <span class="n">find_prim_suffix</span><span class="p">(</span><span class="s2">&quot;/gripper_base_link&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Found gripper_base_link prims ===&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">hits</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;can&#39;t find gripper_base_link, USD load failed&quot;</span><span class="p">)</span>
+
+<span class="n">EE_PRIM</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">h</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hits</span> <span class="k">if</span> <span class="s2">&quot;/link_6/&quot;</span> <span class="ow">in</span> <span class="n">h</span><span class="p">),</span> <span class="n">hits</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;=== Using EE_PRIM: </span><span class="si">{</span><span class="n">EE_PRIM</span><span class="si">}</span><span class="s2"> ===&quot;</span><span class="p">)</span>
+
+<span class="n">gripper</span> <span class="o">=</span> <span class="n">ParallelGripper</span><span class="p">(</span>
+    <span class="n">end_effector_prim_path</span><span class="o">=</span><span class="n">EE_PRIM</span><span class="p">,</span>
+    <span class="n">joint_prim_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;gripper_jaw1_joint&quot;</span><span class="p">],</span>
+    <span class="n">joint_opened_positions</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.014</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+    <span class="n">joint_closed_positions</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+    <span class="n">action_deltas</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.014</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+    <span class="n">use_mimic_joints</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">robot</span> <span class="o">=</span> <span class="n">my_world</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+    <span class="n">SingleManipulator</span><span class="p">(</span>
+        <span class="n">prim_path</span><span class="o">=</span><span class="n">ROBOT_PRIM</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ar4_mk3&quot;</span><span class="p">,</span>
+        <span class="n">end_effector_prim_path</span><span class="o">=</span><span class="n">EE_PRIM</span><span class="p">,</span>
+        <span class="n">gripper</span><span class="o">=</span><span class="n">gripper</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">my_world</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">add_default_ground_plane</span><span class="p">()</span>
+<span class="n">my_world</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">my_world</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+
+<span class="n">OPEN</span><span class="p">,</span> <span class="n">CLOSE</span> <span class="o">=</span> <span class="mf">0.014</span><span class="p">,</span> <span class="mf">0.0</span>
+<span class="n">period_sec</span><span class="p">,</span> <span class="n">fps_est</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">60.0</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">simulation_app</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
+    <span class="n">my_world</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">render</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">my_world</span><span class="o">.</span><span class="n">is_stopped</span><span class="p">():</span>
+        <span class="n">my_world</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+
+    <span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">phase</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="p">(</span><span class="n">fps_est</span> <span class="o">*</span> <span class="n">period_sec</span><span class="p">))</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">s01</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phase</span><span class="p">))</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">CLOSE</span> <span class="o">+</span> <span class="n">s01</span> <span class="o">*</span> <span class="p">(</span><span class="n">OPEN</span> <span class="o">-</span> <span class="n">CLOSE</span><span class="p">)</span>
+
+    <span class="n">robot</span><span class="o">.</span><span class="n">gripper</span><span class="o">.</span><span class="n">apply_action</span><span class="p">(</span>
+        <span class="n">ArticulationAction</span><span class="p">(</span><span class="n">joint_positions</span><span class="o">=</span><span class="p">[</span><span class="n">target</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">test</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">180</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">simulation_app</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "toc.integrate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
