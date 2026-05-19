@@ -1,0 +1,199 @@
+/* =========================================================
+   AI Robot Tutorial — Minimal B/W + Centered Layout
+   ========================================================= */
+
+/* ---------- Theme variables (simple black/white) ---------- */
+:root {
+  --rb-bg: #ffffff;
+  --rb-text: #111111;
+  --rb-muted: #444444;
+  --rb-rule: #e6e6e6;
+  --rb-link: #0b57d0; /* 想纯黑链接就改成 #111 */
+}
+
+/* ---------- Base background & text ---------- */
+html, body {
+  background: var(--rb-bg);
+  color: var(--rb-text);
+}
+
+/* =========================================================
+   1) Hide sidebars (keep pages clean like ringbuffer)
+   ========================================================= */
+.md-sidebar--primary,
+.md-sidebar--secondary {
+  display: none !important;
+}
+
+/* =========================================================
+   2) True centering for main content area
+   (Fixes “not centered” look)
+   ========================================================= */
+.md-main__inner {
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+
+/* Main content container */
+.md-content__inner {
+  max-width: 820px; /* 改成 760px 会更像 ringbuffer */
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 2rem 1.5rem 3rem 1.5rem;
+}
+
+/* =========================================================
+   3) Header + Tabs: white background, centered tabs
+   ========================================================= */
+
+/* White header, no shadow */
+.md-header {
+  background: #fff !important;
+  color: var(--rb-text) !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid var(--rb-rule) !important;
+}
+
+/* Make header inner centered (logo/title/search balanced) */
+.md-header__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Tabs bar: white, no shadow */
+.md-tabs {
+  background: #fff !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid var(--rb-rule) !important;
+  display: flex;
+  justify-content: center !important;
+}
+
+/* Tabs list centered */
+.md-tabs__list {
+  display: flex;
+  justify-content: center !important;
+}
+
+/* Tabs items spacing */
+.md-tabs__item {
+  margin: 0 0.6rem;
+}
+
+/* Tabs links */
+.md-tabs__link {
+  color: var(--rb-muted) !important;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+.md-tabs__link--active {
+  color: var(--rb-text) !important;
+  font-weight: 650;
+}
+
+/* Header title/icon color to black */
+.md-header__title,
+.md-header__topic,
+.md-header__button,
+.md-header__button.md-icon {
+  color: var(--rb-text) !important;
+}
+
+/* =========================================================
+   4) Search (simple B/W)
+   ========================================================= */
+.md-search__form {
+  background: #fff !important;
+  border: 1px solid var(--rb-rule) !important;
+  box-shadow: none !important;
+}
+.md-search__input {
+  color: var(--rb-text) !important;
+}
+
+/* =========================================================
+   5) Typography (course-like)
+   ========================================================= */
+.md-content h1 {
+  text-align: center;
+  color: var(--rb-text);
+  font-size: 2.6rem;
+  font-weight: 600;
+  margin: 1.8rem 0 1.2rem 0;
+}
+
+.md-content h2 {
+  text-align: center; /* “Contents” 居中 */
+  color: var(--rb-text);
+  font-weight: 500;
+  margin-top: 2.0rem;
+  margin-bottom: 1.0rem;
+}
+
+.md-content h3 {
+  color: var(--rb-text);
+  font-weight: 550;
+  margin-top: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.md-content p,
+.md-content li {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--rb-text);
+}
+
+/* Links */
+.md-content a {
+  color: var(--rb-link);
+  text-decoration: none;
+}
+.md-content a:hover {
+  text-decoration: underline;
+}
+
+/* Images centered */
+.md-content img {
+  display: block;
+  margin: 1.2rem auto 1.6rem auto;
+  max-width: 100%;
+}
+
+/* Horizontal rule */
+.md-content hr {
+  border: none;
+  border-top: 1px solid var(--rb-rule);
+  margin: 2rem 0;
+}
+
+/* =========================================================
+   6) Code blocks (clean)
+   ========================================================= */
+.md-typeset pre,
+.md-typeset code {
+  box-shadow: none !important;
+}
+
+.md-typeset pre {
+  border: 1px solid var(--rb-rule) !important;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+/* =========================================================
+   7) Remove footer ("Made with Material for MkDocs")
+   ========================================================= */
+.md-footer,
+.md-footer-meta {
+  display: none !important;
+}
+
+/* =========================================================
+   8) Optional: reduce extra vertical whitespace (subtle)
+   ========================================================= */
+.md-content {
+  padding-bottom: 2rem;
+}
