@@ -1,0 +1,39 @@
+site_name: AI Robot Tutorial
+site_url: ""
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.top
+    - toc.integrate
+    - content.code.copy
+  font:
+    text: Noto Serif
+    code: Roboto Mono
+
+nav:
+  - Home: index.md
+  - Setup: setup/index.md
+  - Simulation and Control: sc/index.md
+  - Perception: perception/index.md
+  - Learning: learning/index.md
+  - Deployment: deploy/index.md
+
+markdown_extensions:
+  - attr_list
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - toc:
+      permalink: true
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - search
